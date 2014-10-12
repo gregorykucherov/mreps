@@ -82,11 +82,11 @@ void init_limits ()
 void logo()
 {
   printf("\n *****************************************************************************\n");
-  printf(  " *                              mreps 2.5                                    *\n");
+  printf(  " *                              mreps 2.6                                    *\n");
   printf(  " *                                                                           *\n");
   printf(  " *                Finding tandem repeats in DNA sequences                    *\n");
   printf(  " *                                                                           *\n");
-  printf(  " *                      http://www.loria.fr/mreps/                           *\n");
+  printf(  " *                      http://mreps.univ-mlv.fr/                            *\n");
   printf(  " *****************************************************************************\n\n");
 }
 
