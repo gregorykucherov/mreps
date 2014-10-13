@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../defs.h"
+#include "defs.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #define TAKEALLNUMERR
