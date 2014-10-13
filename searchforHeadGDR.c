@@ -1,7 +1,7 @@
 /* Search for GDRs of the first type */
 
 #include <stdlib.h>
-#include "../defs.h"
+#include "defs.h"
 
 void FindLocalHeadGDR(void);
 void FindFinalLocalHeadGDR(void);

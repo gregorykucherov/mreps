@@ -1,7 +1,7 @@
 /* Search for GDRs of the second type and assembling GDRs into runs */
 
 #include <stdlib.h>
-#include "../defs.h"
+#include "defs.h"
 
 #define FNDRUNS
 void EmergSortFirstTypeRepeats(void);

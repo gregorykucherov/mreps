@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../defs.h"
+#include "defs.h"
 
 void FindAllHeadGDR(void);
 void RightFreeFindAllHeadGDR(void);
