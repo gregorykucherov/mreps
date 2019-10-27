@@ -7,6 +7,8 @@
 #include <string.h>
 #include <time.h>
 
+#define VERSION "2.6"
+
 #include "defs.h"
 #define INPUT_ARG    0
 #define INPUT_STDIN  1   // input from stdin; not implemented
@@ -118,11 +120,12 @@ void help()
 /*   printf( "               (All separators will be considered as the\n"); */
 /*   printf( "               same character: blank.)\n"); */
   printf( " -win n       : process by sliding windows of size 2*n overlaping by n\n");
+  printf( " -version     : show version\n");
   printf( " -xmloutput <file> : outputs to <file> in xml format\n");
   printf( " -noprint     : if specified, the repetition sequences will not be output \n");
   printf( "\nExample:\n");
   printf( "mreps -res 3 -exp 3.0 -from 10000 -to 12000 ecolim52.fas\n\n");
-  exit(1);
+  exit(0);
 }
 
 /* Three macros for argument parsing  !!! Test errors !! */
@@ -387,7 +390,7 @@ void ProcessSeqFromCommandLine(char * inputSeq)
       fprintf(output_file,"<windowend>%d</windowend>\n",final_pstn);
     }
   PROCESS_ACGT(inputSeq+start_pstn, final_pstn-start_pstn);
-      fprintf(output_file,"</window>\n");
+    if (xmloutput==YES) fprintf(output_file,"</window>\n");
 }
   
 
@@ -450,8 +453,6 @@ int main (int argc,char * argv[])
   /* let us start */
 
   init_limits ();       // initialize borderline values 
-
-  logo();               // print the logo of the program 
   
   /* 1. Parsing the arguments of the command line */
 
@@ -462,6 +463,11 @@ int main (int argc,char * argv[])
 
   if (!strcmp (*argv, "-h") || !strcmp (*argv, "-help")) /* help */ 
     help() ; 
+
+  if (!strcmp (*argv, "-v") || !strcmp (*argv, "-version")) /* help */ 
+    {printf("%s\n",VERSION); exit(0);} 
+
+  logo();               // print the logo of the program 
 
 /*   while (argc >= 3 || (argc == 2 && input_type == INPUT_STDIN) ) */
   while (argc >= 3 && input_type != INPUT_ARG)
@@ -759,33 +765,32 @@ int main (int argc,char * argv[])
 
   /* 5. Process the input */
 
-  if (input_type == INPUT_ARG)
-     ProcessSeqFromCommandLine(*argv);
-  else
-    if (situation == ACGT_FILE_FASTA)
-      {
-	if ((workchar = getc(input_file)) != '>')
-	  {
-	    fprintf(stderr,"Error: fasta file must start with '>'\n");
-	    TERMINATE_XML_OUTPUT(output_file,output_file_name,15);
-	    exit (15);
-	  }
-	while (workchar == '>')
-	  {
-	    workchar=ReadSeqName(input_file);
-	    if (workchar != EOF)
-	      {
-		nrRep = 0; 
-		tooBigReps=NO;
-		if (xmloutput==YES) fprintf(output_file,"<repetitions>\n");
-		workchar=ProcessSeqFromFile(input_file);
-		if (xmloutput==YES) fprintf(output_file,"</repetitions>\n");
-	      }
-	  }
-      }
-    else
-      workchar=ProcessSeqFromFile(input_file);	
-
+	if (input_type == INPUT_ARG)
+		ProcessSeqFromCommandLine(*argv);
+	else
+		if (situation == ACGT_FILE_FASTA)
+	{
+		if ((workchar = getc(input_file)) != '>')
+		{
+			fprintf(stderr,"Error: fasta file must start with '>'\n");
+			TERMINATE_XML_OUTPUT(output_file,output_file_name,15);
+			exit (15);
+		}
+		while (workchar == '>')
+		{
+			workchar=ReadSeqName(input_file);
+			if (workchar != EOF)
+			{
+				nrRep = 0; 
+				tooBigReps=NO;
+				if (xmloutput==YES) fprintf(output_file,"<repetitions>\n");
+				workchar=ProcessSeqFromFile(input_file);
+				if (xmloutput==YES) fprintf(output_file,"</repetitions>\n");
+			}
+		}
+	}
+	else
+		workchar=ProcessSeqFromFile(input_file);	
 #ifdef SHOWJUNK
   if (showjunk)
      fclose(junkfile);
