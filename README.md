@@ -6,7 +6,8 @@ make
 ```
 ## Getting started
 ```
-./mreps testfile.fas
+./mreps -allowsmall -s ATCACTAGaagaACAGAACAATTACTTaatag
+./mreps -res 1 -fasta test/sequence.fasta
 ```
 ## Everything about `mreps`
 Can be found on [`mreps` webpage](http://mreps.univ-mlv.fr/)
