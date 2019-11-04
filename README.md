@@ -1,4 +1,14 @@
 ## Installation
+
+### Conda
+```
+conda install -c bioconda mreps
+```
+### Homebrew
+```
+brew install brewsci/bio/mreps
+```
+### Source
 ```
 git clone https://github.com/gregorykucherov/mreps.git
 cd mreps
